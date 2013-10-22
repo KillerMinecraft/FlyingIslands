@@ -30,7 +30,7 @@ public class FlyingIslands extends WorldGenerator
 	
 	class IslandGenerator extends org.bukkit.generator.ChunkGenerator
 	{
-		static final int solidChance1x1 = 16, solidChance2x2 = 12, solidChance3x3 = 30;
+		static final int solidChance1x1 = 16, solidChance2x2 = 11, solidChance3x3 = 30;
 
 		final byte d = (byte)Material.DIRT.getId();
 		final byte grass = (byte)Material.GRASS.getId();
@@ -39,6 +39,7 @@ public class FlyingIslands extends WorldGenerator
 		
 		Random r = new Random();
 		long seed = r.nextLong();
+		
 		public byte[][] generateBlockSections(World world, Random random, int cx, int cz, BiomeGrid biomes)
 		{
 			if ( !isSolid(cx, cz))
@@ -79,15 +80,15 @@ public class FlyingIslands extends WorldGenerator
 */
 		private boolean isSolid(int cx, int cz)
 		{
-			r.setSeed(cx + cz * 10000 + seed);
+			r.setSeed((long) cx * 341873128712L + (long) cz * 132897987541L + seed);
 			if ( r.nextInt(solidChance1x1) == 0 )
 				return true;
 			
-			r.setSeed((int)Math.floor(cx/2) + (int)Math.floor(cz/2) * 10000 + seed);
+			r.setSeed((long) Math.floor(cx/2) * 341873128712L + (long) Math.floor(cz/2) * 132897987541L + seed + seed);
 			if ( r.nextInt(solidChance2x2) == 0 )
 				return true;
 			
-			r.setSeed((int)Math.floor(cx/3) + (int)Math.floor(cz/3) * 10000 + seed);
+			r.setSeed((int)Math.floor(cx/3) * 341873128712L + (int)Math.floor(cz/3) * 132897987541L + seed + seed + seed);
 			if ( r.nextInt(solidChance3x3) == 0 )
 				return true;
 			
@@ -110,7 +111,10 @@ public class FlyingIslands extends WorldGenerator
 				else if ( !south )
 					rotate180(data);
 				else if ( !east )
+				{
 					rotateClockwise90(data);
+					flipHorizontal(data); // whatever i do, this faces the opposite way to what it should
+				}
 				else if ( !west )
 					rotateAnticlockwise90(data);
 				return data;
@@ -125,7 +129,7 @@ public class FlyingIslands extends WorldGenerator
 					
 					data = Arrays.copyOf(templateSouthWest, 256);
 					if ( east )
-						rotateClockwise90(data); // swapped these two, which doesn't seem right. Works, though.
+						rotateClockwise90(data);
 					else if ( west )
 						rotate180(data);
 				}
@@ -152,7 +156,10 @@ public class FlyingIslands extends WorldGenerator
 				else if ( south )
 					rotate180(data);
 				else if ( east )
+				{
 					rotateClockwise90(data);
+					flipHorizontal(data); // whatever i do, this faces the opposite way to what it should
+				}
 				else if ( west )
 					rotateAnticlockwise90(data);
 				return data;
@@ -216,8 +223,8 @@ public class FlyingIslands extends WorldGenerator
 			0,0,0,d,d,d,d,d,d,d,d,d,d,0,0,0,
 			0,0,0,0,d,d,d,d,d,d,d,d,0,0,0,0,
 			0,0,0,0,0,d,d,d,d,d,d,0,0,0,0,0,
-			0,0,0,0,0,0,0,d,d,d,0,0,0,0,0,0,
-			0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+			0,0,0,0,0,0,d,d,d,d,0,0,0,0,0,0,
+			0,0,0,0,0,0,0,d,d,0,0,0,0,0,0,0
 		};
 		
 		final byte[] templateAllButNorth = new byte[] {		
@@ -331,28 +338,4 @@ public class FlyingIslands extends WorldGenerator
 			flipVertical(input);
 		}
 	}
-	
-/*	
-	public class ExtraLavaPopulator extends BlockPopulator
-	{
-		public void populate(World world, Random random, Chunk chunk)
-		{			
-			if ( random.nextDouble() < 0.33 )
-				return; // 2/3 chance of adding extra lava to a chunk
-			
-			// pick a random point in the chunk. trace downwards through the air until we hit something.
-			// If it's not leaves or log (we're avoiding those, to avoid massive fire spread), or liquid (don't do it on the ocean), create lava above it
-			int x = random.nextInt(16); int z = random.nextInt(16);
-			for ( int y=128; y>0; y-- )
-			{
-				Block b = chunk.getBlock(x,y,z); 
-				if ( b.getType() != Material.AIR && b.getType() != Material.SNOW) // snow lying on top of trees shouldn't change anything
-				{
-					if ( b.getType() != Material.LEAVES && b.getType() != Material.LOG && !b.isLiquid())
-						 b.getRelative(BlockFace.UP).setType(Material.LAVA);
-					break;
-				}
-			}
-		}
-	}*/
 }
