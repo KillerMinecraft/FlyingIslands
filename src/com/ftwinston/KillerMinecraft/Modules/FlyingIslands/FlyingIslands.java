@@ -173,8 +173,9 @@ public class FlyingIslands extends WorldGenerator
 			F1 = 101, F2 = 102, F3 = 103, F4 = 104, F5 = 105, F6 = 106, F7 = 107, F8 = 108, F9 = 109, 
 			numSolidValues = 110;
 		
-		private byte[] applyMaterialsToShapeTemplate(byte[] template, byte solid, Rotation... allowedRotations)
+		private byte[] applyMaterialsToShapeTemplate(byte[][] templateSet, byte solid, Rotation... allowedRotations)
 		{
+			byte[] template = templateSet[r.nextInt(templateSet.length)];
 			byte[] data = new byte[template.length];
 			
 			byte[] materials = new byte[numSolidValues];
@@ -228,7 +229,7 @@ public class FlyingIslands extends WorldGenerator
 			return data;
 		}
 		
-		final byte[] templateNESW = new byte[] {
+		final byte[][] templateNESW = new byte[][] { {
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
@@ -245,9 +246,9 @@ public class FlyingIslands extends WorldGenerator
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX
-		};
+		} };
 		
-		final byte[] templateNoAdjoining = new byte[] {
+		final byte[][] templateNoAdjoining = new byte[][] { {
 			00,00,00,00,00,XX,XX,XX,XX,XX,XX,00,00,00,00,00,
 			00,00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
 			00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
@@ -264,9 +265,9 @@ public class FlyingIslands extends WorldGenerator
 			00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
 			00,00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
 			00,00,00,00,00,XX,XX,XX,XX,XX,XX,00,00,00,00,00
-		};
+		} };
 		
-		final byte[] templateNorthOnly = new byte[] {
+		final byte[][] templateNorthOnly = new byte[][] { {
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
 			00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
@@ -283,9 +284,9 @@ public class FlyingIslands extends WorldGenerator
 			00,00,00,00,00,XX,XX,XX,XX,XX,XX,00,00,00,00,00,
 			00,00,00,00,00,00,XX,XX,XX,XX,00,00,00,00,00,00,
 			00,00,00,00,00,00,00,XX,XX,00,00,00,00,00,00,00
-		};
+		} };
 		
-		final byte[] templateAllButNorth = new byte[] {		
+		final byte[][] templateAllButNorth = new byte[][] { {		
 			XX,XX,00,00,00,00,00,00,00,00,00,00,00,00,XX,XX,
 			XX,XX,XX,XX,XX,XX,00,00,00,00,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
@@ -302,44 +303,66 @@ public class FlyingIslands extends WorldGenerator
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
 			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX
+		} };
+		
+		final byte[][] templateSouthWest = new byte[][] {
+			{
+				XX,XX,XX,00,00,00,00,00,00,00,00,00,00,00,00,00,
+				XX,XX,XX,XX,XX,XX,XX,00,00,00,00,00,00,00,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,00,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX
+			}
 		};
 		
-		final byte[] templateSouthWest = new byte[] {
-			XX,XX,XX,00,00,00,00,00,00,00,00,00,00,00,00,00,
-			XX,XX,XX,XX,XX,XX,XX,00,00,00,00,00,00,00,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,00,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX
-		};
-		
-		final byte[] templateNorthSouth = new byte[] {
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
-			00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
-			00,00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
-			00,00,00,00,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,00,
-			00,00,00,00,00,00,XX,XX,XX,XX,00,00,00,00,00,00,
-			00,00,00,00,00,00,00,XX,XX,00,00,00,00,00,00,00,
-			00,00,00,00,00,00,00,XX,XX,00,00,00,00,00,00,00,
-			00,00,00,00,00,00,XX,XX,XX,XX,00,00,00,00,00,00,
-			00,00,00,00,00,XX,XX,XX,XX,XX,XX,XX,00,00,00,00,
-			00,00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,00,
-			00,00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,00,
-			00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			00,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,00,
-			XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX
+		final byte[][] templateNorthSouth = new byte[][] {
+			{
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				a5,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b5,
+				a4,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b4,
+				a4,a6,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b6,b4,
+				a3,a5,a7,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b7,b5,b3,
+				a3,a4,a6,a7,a8,XX,XX,XX,XX,XX,XX,b8,b7,b6,b4,b3,
+				a2,a3,a4,a5,a7,a7,a9,XX,XX,b9,b7,b7,b5,b4,b3,b2,
+				a1,a2,a4,a5,a6,a7,a8,a9,b9,b8,b7,b6,b5,b4,b2,b1,
+				a1,a2,a4,a5,a6,a7,a8,a9,b9,b8,b7,b6,b5,b4,b2,b1,
+				a2,a3,a4,a5,a7,a7,a9,XX,XX,b9,b7,b7,b5,b4,b3,b2,
+				a3,a4,a6,a7,a8,XX,XX,XX,XX,XX,XX,b8,b7,b6,b4,b3,
+				a3,a5,a7,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b7,b5,b3,
+				a4,a6,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b6,b4,
+				a4,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b4,
+				a5,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,b5,
+				XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX
+			},
+			{
+				a9,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				a6,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,c6,
+				a6,a8,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,c9,c6,c5,
+				a5,a7,a9,XX,XX,XX,XX,XX,XX,XX,XX,XX,c9,c7,c5,c3,
+				a5,a7,a9,XX,XX,XX,XX,XX,XX,XX,XX,c9,c9,c7,c5,c3,
+				a6,a8,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,c8,c6,c5,
+				a6,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,c8,c6,
+				a9,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,c8,
+				b9,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				b8,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				b8,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,
+				b7,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,d9,
+				b7,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,d9,d7,
+				b8,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,d8,d4,
+				b8,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,d9,d7,
+				b9,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,XX,d9
+			}
 		};
 	}
 }
