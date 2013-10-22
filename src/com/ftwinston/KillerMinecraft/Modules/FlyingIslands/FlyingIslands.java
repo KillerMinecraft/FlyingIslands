@@ -111,10 +111,7 @@ public class FlyingIslands extends WorldGenerator
 				else if ( !south )
 					rotate180(data);
 				else if ( !east )
-				{
 					rotateClockwise90(data);
-					flipHorizontal(data); // whatever i do, this faces the opposite way to what it should
-				}
 				else if ( !west )
 					rotateAnticlockwise90(data);
 				return data;
@@ -129,9 +126,9 @@ public class FlyingIslands extends WorldGenerator
 					
 					data = Arrays.copyOf(templateSouthWest, 256);
 					if ( east )
-						rotateClockwise90(data);
-					else if ( west )
 						rotate180(data);
+					else if ( west )
+						rotateClockwise90(data);
 				}
 				else if ( south )
 				{
@@ -156,10 +153,7 @@ public class FlyingIslands extends WorldGenerator
 				else if ( south )
 					rotate180(data);
 				else if ( east )
-				{
 					rotateClockwise90(data);
-					flipHorizontal(data); // whatever i do, this faces the opposite way to what it should
-				}
 				else if ( west )
 					rotateAnticlockwise90(data);
 				return data;
@@ -310,8 +304,8 @@ public class FlyingIslands extends WorldGenerator
 		
 		private void flipHorizontal(byte[] data)
 		{
-			for (int i = 0; i < 16; i++) 
-				for (int j = 0; j < 8; j++)
+			for (int i = 0; i < 8; i++) 
+				for (int j = 0; j < 16; j++)
 				{ 
 					int i1 = i + j*16, i2 = 15-i + j*16;
 					byte temp = data[i1]; 
