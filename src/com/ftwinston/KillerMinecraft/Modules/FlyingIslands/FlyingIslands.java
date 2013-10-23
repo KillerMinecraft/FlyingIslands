@@ -122,7 +122,7 @@ public class FlyingIslands extends WorldGenerator
 					if ( south )
 						return applyMaterialsToShapeTemplate(templateNorthSouth, material, Rotation.FLIP_HORIZONTAL, Rotation.FLIP_VERTICAL, Rotation.ROTATE_180);
 					
-					data = applyMaterialsToShapeTemplate(templateSouthWest, material, east ? Rotation.TRANSPOSE_INVERSE : Rotation.TRANSPOSE);
+					data = applyMaterialsToShapeTemplate(templateSouthWest, material, Rotation.TRANSPOSE_INVERSE);
 					if ( east )
 						Rotation.ROTATE_180.perform(data);
 					else
@@ -130,7 +130,7 @@ public class FlyingIslands extends WorldGenerator
 				}
 				else if ( south )
 				{
-					data = applyMaterialsToShapeTemplate(templateSouthWest, material, east ? Rotation.TRANSPOSE : Rotation.TRANSPOSE_INVERSE);
+					data = applyMaterialsToShapeTemplate(templateSouthWest, material, Rotation.TRANSPOSE_INVERSE);
 					if ( east )
 						Rotation.ANTICLOCKWISE_90.perform(data);
 				}
@@ -187,37 +187,37 @@ public class FlyingIslands extends WorldGenerator
 			int[] forwardIndices = new int[] { 0, a1, a2, a3, a4, a5, a6, a7, a8, a9 };
 			int[] backwardIndices = new int[] { 0, A1, A2, A3, A4, A5, A6, A7, A8, A9 };
 			for ( int i=1; i<forwardIndices.length; i++ )
-				materials[i <= rand ? forwardIndices[i] : backwardIndices[i]] = solid;
+				materials[rand <= i ? forwardIndices[i] : backwardIndices[i]] = solid;
 				
 			rand = r.nextInt(10);
 			forwardIndices = new int[] { 0, b1, b2, b3, b4, b5, b6, b7, b8, b9 };
 			backwardIndices = new int[] { 0, B1, B2, B3, B4, B5, B6, B7, B8, B9 };
 			for ( int i=1; i<forwardIndices.length; i++ )
-				materials[i <= rand ? forwardIndices[i] : backwardIndices[i]] = solid;
+				materials[rand <= i ? forwardIndices[i] : backwardIndices[i]] = solid;
 				
 			rand = r.nextInt(10);
 			forwardIndices = new int[] { 0, c1, c2, c3, c4, c5, c6, c7, c8, c9 };
 			backwardIndices = new int[] { 0, C1, C2, C3, C4, C5, C6, C7, C8, C9 };
 			for ( int i=1; i<forwardIndices.length; i++ )
-				materials[i <= rand ? forwardIndices[i] : backwardIndices[i]] = solid;
+				materials[rand <= i ? forwardIndices[i] : backwardIndices[i]] = solid;
 				
 			rand = r.nextInt(10);
 			forwardIndices = new int[] { 0, d1, d2, d3, d4, d5, d6, d7, d8, d9 };
 			backwardIndices = new int[] { 0, D1, D2, D3, D4, D5, D6, D7, D8, D9 };
 			for ( int i=1; i<forwardIndices.length; i++ )
-				materials[i <= rand ? forwardIndices[i] : backwardIndices[i]] = solid;
+				materials[rand <= i ? forwardIndices[i] : backwardIndices[i]] = solid;
 				
 			rand = r.nextInt(10);
 			forwardIndices = new int[] { 0, e1, e2, e3, e4, e5, e6, e7, e8, e9 };
 			backwardIndices = new int[] { 0, E1, E2, E3, E4, E5, E6, E7, E8, E9 };
 			for ( int i=1; i<forwardIndices.length; i++ )
-				materials[i <= rand ? forwardIndices[i] : backwardIndices[i]] = solid;
+				materials[rand <= i ? forwardIndices[i] : backwardIndices[i]] = solid;
 				
 			rand = r.nextInt(10);
 			forwardIndices = new int[] { 0, f1, f2, f3, f4, f5, f6, f7, f8, f9 };
 			backwardIndices = new int[] { 0, F1, F2, F3, F4, F5, F6, F7, F8, F9 };
 			for ( int i=1; i<forwardIndices.length; i++ )
-				materials[i <= rand ? forwardIndices[i] : backwardIndices[i]] = solid;
+				materials[rand <= i ? forwardIndices[i] : backwardIndices[i]] = solid;
 			
 			// apply this to the data
 			for ( int i=0; i<data.length; i++ )
