@@ -39,11 +39,11 @@ public class IslandOutline
 	public void applyDataTo(boolean[] mask, int cx, int cz)
 	{
 		Random r = new Random(dataSeed);
-		int xOffset = (cx << 4) - centerX, zOffset = (cz << 4) - centerZ;
+		//int xOffset = (cx << 4) - centerX, zOffset = (cz << 4) - centerZ;
 		
 		// TODO: need to change the noise generation so that the max value ALWAYS equals maxRadius
-		double[] outlineMagnitudes = NoiseGenerator.generateScaledNoise(r, maxRadius, minIslandRadius);
+		/*double[] outlineMagnitudes =*/ NoiseGenerator.generateScaledNoise(r, maxRadius, minIslandRadius);
 		
-		boolean[][] fullOutline = new boolean[maxRadius * 2 + 1][maxRadius * 2 + 1];
+		//boolean[][] fullOutline = new boolean[maxRadius * 2 + 1][maxRadius * 2 + 1];
 	}
 }

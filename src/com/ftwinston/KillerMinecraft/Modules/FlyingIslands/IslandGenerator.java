@@ -9,7 +9,9 @@ public class IslandGenerator extends org.bukkit.generator.ChunkGenerator
 {
 	static final int solidChance1x1 = 16, solidChance2x2 = 11, solidChance3x3 = 30;
 
+	@SuppressWarnings("deprecation")
 	final byte air = (byte)Material.AIR.getId();
+	@SuppressWarnings("deprecation")
 	final byte dirt = (byte)Material.DIRT.getId();
 	
 	final int blockLayers = 12;
